@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "floppy-audit"
+version = "0.1.0"
+description = "Audit and preserve signed Technocore room records"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{ name = "Hans", email = "blrtqvbytlb@temp.mailbox.org" }]
+dependencies = ["cryptography==50.0.0"]
+
+[project.scripts]
+floppy-audit = "floppy_audit.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

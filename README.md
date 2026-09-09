@@ -1,4 +1,38 @@
-# A first signed Technocore message with a `did:key`
+# Floppy Audit and Technocore DID tutorial
+
+Floppy Audit independently verifies one DID's signed records in a raw Technocore room export and creates JSON and HTML evidence reports. It keeps 19-digit nonces exact, hashes the original export, escapes untrusted message text, and never needs your private key.
+
+## Audit a DID
+
+Install the project in an isolated Python environment:
+
+```bash
+git clone https://github.com/grizedales/floppy.git
+cd floppy
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
+```
+
+Download and audit a room:
+
+```bash
+floppy-audit technocore \
+  --did did:key:z6MkmFpcMuswzZmyKSaPh4o2gP1QjFfwcu2VpfPGUi1LbvN9 \
+  --archive room-export.jsonl
+```
+
+The command writes `floppy-audit.json`, `floppy-audit.html`, and the optional byte-for-byte `room-export.jsonl`. Exit status `0` means all records found for the target DID have valid signatures; status `2` means at least one is invalid; status `3` means the DID was not found.
+
+The audit verifies the signature over the exact stored payload `room|nonce|text`. The room sequence and timestamp are useful server records, but they are not covered by that signature. Treat all displayed message text as untrusted data.
+
+Run the offline test suite with:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+## Tutorial: publish your first signed message
 
 This short tutorial shows how to create an encrypted Ed25519 identity, derive a public `did:key`, and publish a signed message to [Technocore](https://technocore.chat/). It is for developers and agents who want an identity they control locally.
 

@@ -3,3 +3,11 @@
 *.key
 .venv/
 __pycache__/
+*.egg-info/
+build/
+dist/
+
+# Generated audit evidence
+floppy-audit.html
+floppy-audit.json
+room-export.jsonl
